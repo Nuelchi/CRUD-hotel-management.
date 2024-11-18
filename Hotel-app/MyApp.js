@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 4000
 
 //MIDDLEWARE
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 
 
@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: false}));
 //ROUTES
 
 //Testing route
-app.get('/', (req,res) =>{
+app.get('/', (req, res) => {
     res.send('welcome to my Api Node server')
 });
 
@@ -31,27 +31,27 @@ app.get('/', (req,res) =>{
 
 
 
-             //ROUTES FOR ROOM TYPE
+//ROUTES FOR ROOM TYPE
 
 //POST
 //posting Room-types
 app.post('/api/rooms-type', async (req, res) => {
     try {
-        const roomType = await RoomType.create(req.body); 
-        res.status(200).json(roomType); 
+        const roomType = await RoomType.create(req.body);
+        res.status(200).json(roomType);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
 
 //Getting all Room-types
-app.get('/api/rooms-types', async (req,res)=>{
-    try{
+app.get('/api/rooms-types', async (req, res) => {
+    try {
         const roomType = await RoomType.find({});
         res.status(200).json(roomType)
 
-    } catch (error){
-        res.status(500).json({message: error.message});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 })
 
@@ -66,7 +66,7 @@ app.get('/api/rooms-types', async (req,res)=>{
 
 
 
-                 // ROUTES FOR ROOMS
+// ROUTES FOR ROOMS
 
 //GET
 //Getting the entire rooms with filter
@@ -112,26 +112,26 @@ app.get('/api/rooms', async (req, res) => {
 
 
 //Getting a single room by object id
-app.get('./api/rooms/:id', async ()=>{
-    try{
+app.get('/api/rooms/:id', async (req, res) => {
+    try {
         const room = await Room.findById(req.params.id);
 
-        if(!room) {
-            return res.status(404).json({ message: 'Course not found' });
+        if (!room) {
+            return res.status(404).json({ message: 'Room with ID not found' });
         }
         res.status(200).json(room)
 
-    } catch (error){
-        res.status(500).json({message: error.message});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-})
+});
 
 
 //posting to Room
 app.post('/api/rooms', async (req, res) => {
     try {
-        const newRoom = await Room.create(req.body); 
-        res.status(200).json(newRoom); 
+        const newRoom = await Room.create(req.body);
+        res.status(200).json(newRoom);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -139,7 +139,7 @@ app.post('/api/rooms', async (req, res) => {
 
 
 //patching from room 
-app.patch('/api/rooms/:id', async (req,res)=>{
+app.patch('/api/rooms/:id', async (req, res) => {
     try {
         const updateRoom = await Room.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
@@ -159,18 +159,18 @@ app.patch('/api/rooms/:id', async (req,res)=>{
 
 //delete room
 app.delete('/api/rooms/:id', async (req, res) => {
-        try {
-            const deletedRoom = await Room.findByIdAndDelete(req.params.id);
-    
-            if (!deletedRoom) {
-                return res.status(404).json({ message: 'Room with the specified ID not found!' });
-            }
-    
-            res.status(200).json({ message: 'Room deleted successfully!', room: deletedRoom });
-        } catch (error) {
-            res.status(400).json({ message: error.message });
+    try {
+        const deletedRoom = await Room.findByIdAndDelete(req.params.id);
+
+        if (!deletedRoom) {
+            return res.status(404).json({ message: 'Room with the specified ID not found!' });
         }
-    });
+
+        res.status(200).json({ message: 'Room deleted successfully!', room: deletedRoom });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
 
 
@@ -187,9 +187,9 @@ app.delete('/api/rooms/:id', async (req, res) => {
 //Connecting to Mongo Database
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to the Database!'))
-  .catch((error) => console.log('Connection failed', error));
+    .then(() => console.log('Connected to the Database!'))
+    .catch((error) => console.log('Connection failed', error));
 
 //   console.log('MONGO_URI:', process.env.MONGO_URI);
 
-app.listen(PORT, ()=> console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
