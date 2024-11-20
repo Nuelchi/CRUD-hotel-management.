@@ -1,11 +1,15 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
-const { Room, RoomType } = require('./models/hotel-model.js');
+const Room = require('./models/Room-model.js');
+const RoomType = require('./models/Room-Type-model.js');
 
 const express = require('express');
 const { Db } = require('mongodb');
 const app = express();
+
+const roomRoute = require('./Routes/room.routes.js')
+const roomTypeRoute = require('./Routes/roomType.route.js')
 
 const PORT = process.env.PORT || 4000
 
@@ -16,7 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
+
 //ROUTES
+// app.use('/api/rooms', roomRoute)
+// app.use('/api/rooms-types', roomTypeRoute)
+
+
 
 //Testing route
 app.get('/', (req, res) => {
@@ -26,16 +35,11 @@ app.get('/', (req, res) => {
 
 
 
-
-
-
-
-
 //ROUTES FOR ROOM TYPE
 
 //POST
 //posting Room-types
-app.post('/api/rooms-type', async (req, res) => {
+app.post('/api/rooms-types', async (req, res) => {
     try {
         const roomType = await RoomType.create(req.body);
         res.status(200).json(roomType);
