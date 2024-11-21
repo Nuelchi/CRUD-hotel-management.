@@ -1,32 +1,22 @@
-// const express = require('express');
+const express = require('express');
+const Router = express.Router();
 
-// const roomType = require('../models/Room-Type-model')
-// const Room = require('../models/Room-model')
-
-
-// Router.get('/', async (req, res) => {
-//     try {
-//         const room = await Room.findById(req.params.id);
-
-//         if (!room) {
-//             return res.status(404).json({ message: 'Room with ID not found' });
-//         }
-//         res.status(200).json(room);
-
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     };
-// })
-
-// Router.get = ('/', async (req, res)={
+const {getRoom, getRooms, createRoom, updateRoom, deleteRoom} = require('../controllers/room-controllers')
 
 
-// })
-// Router.get = ('/', async (req, res)={
 
-// })
+// Define routes
+//Get
+Router.get('/', getRooms);
+Router.get('/:id', getRoom);
 
-// module.exports = Router;
+//post
+Router.post('/', createRoom);
 
+//update
+Router.patch('/:id', updateRoom);
 
-// export default (Router);
+//delete
+Router.delete('/:id', deleteRoom)
+
+module.exports = Router; // Ensure Router is exported
