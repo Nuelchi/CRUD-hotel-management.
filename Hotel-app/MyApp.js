@@ -3,6 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Room = require('./models/Room-model.js');
 const RoomType = require('./models/Room-Type-model.js');
+const userRoute = require('./Routes/user-routes.js')
 
 const express = require('express');
 const { Db } = require('mongodb');
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 //ROUTES
 app.use('/api/rooms', roomRoute)
 app.use('/api/rooms-types', roomTypeRoute)
+app.use('/api/user', userRoute)
 
 
 
