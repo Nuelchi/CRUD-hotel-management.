@@ -12,12 +12,12 @@ Router.get('/',protection.protectPath, getRooms);
 Router.get('/:id', protection.protectPath, getRoom);
 
 //post
-Router.post('/', createRoom);
+Router.post('/', protection.protectPath, createRoom);
 
 //update
-Router.patch('/:id', updateRoom);
+Router.patch('/:id',protection.protectPath, updateRoom);
 
 //delete
-Router.delete('/:id', deleteRoom)
+Router.delete('/:id',protection.protectPath, deleteRoom)
 
 module.exports = Router; // Ensure Router is exported
