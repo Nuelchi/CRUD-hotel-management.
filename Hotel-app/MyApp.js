@@ -14,7 +14,7 @@ const roomTypeRoute = require('./Routes/roomType.route.js')
 
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 
 
