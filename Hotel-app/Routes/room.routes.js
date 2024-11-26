@@ -1,5 +1,6 @@
 const express = require('express');
 const Router = express.Router();
+const protection = require('../controllers/user-controllers');
 
 const {getRoom, getRooms, createRoom, updateRoom, deleteRoom} = require('../controllers/room-controllers')
 
@@ -7,8 +8,8 @@ const {getRoom, getRooms, createRoom, updateRoom, deleteRoom} = require('../cont
 
 // Define routes
 //Get
-Router.get('/', getRooms);
-Router.get('/:id', getRoom);
+Router.get('/',protection.protectPath, getRooms);
+Router.get('/:id', protection.protectPath, getRoom);
 
 //post
 Router.post('/', createRoom);

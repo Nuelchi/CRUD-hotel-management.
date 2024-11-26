@@ -44,7 +44,8 @@ const loginUser = async (req, res) => {
             expiresIn: process.env.LOGIN_EXPIRES
         })
 
-        return res.status(200).json({ message: 'You have Logged in Successfully!!, find your Access token below', Token});
+        res.cookie('jwt', Token)
+        return res.status(200).json({ message: 'You have Logged in Successfully!!, find your Access token in the cookie section'});
     } catch(error){
         res.status(404).json({message: error.message});
 
@@ -70,6 +71,32 @@ const resetPassword = async (req, res) =>{
     }
 };
 
+const protectPath = async(req, res, next) =>{
+    //read the token and check if it exists
+    testToken = req.headers.authorization;
+    
+    let Token;
+    if(testToken && testToken.toLowerCase().startsWith('bearer ')){
+        Token = testToken.split(' ')[1];
+    }
+    if(!Token){
+        res.status(401).json({ message: 'please provide the Access token issued to you at login'});
+    }
+   
+
+    //Validate token
+    // const decoded = await jwt.verify(Token, process.env.SECRET_STR);
+    // console.log('Decoded Payload:', decoded);
+
+    // if(!decoded){
+    //     res.status(404).json({message: 'Token has expired, please login again'})
+    // }
+
+    // //verify if the user exists
+    // user = User.findOne(user._id)
+    next()
+}
 
 
-module.exports = {createUser, loginUser, resetPassword}
+
+module.exports = {createUser, loginUser, resetPassword, protectPath}
