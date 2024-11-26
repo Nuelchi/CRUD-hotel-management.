@@ -14,7 +14,7 @@ Router.get('/',protection.protectPath, getRooms);
 Router.get('/:id', protection.protectPath, getRoom);
 
 //post
-Router.post('/', protection.protectPath, protection.restriction("admin"), createRoom);
+Router.post('/', protection.protectPath, protection.restriction('admin'), createRoom);
 
 //update
 Router.patch('/:id',protection.protectPath,protection.restriction('admin'), updateRoom);

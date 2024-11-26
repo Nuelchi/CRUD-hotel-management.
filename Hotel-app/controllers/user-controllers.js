@@ -81,7 +81,7 @@ const resetPassword = async (req, res) => {
 
 
 //MIDDLEWARES AND ROLES
-//midddleware to verify all users trying to gain access to the app
+//midddleware to verify all users trying perform actions in the app
 const protectPath = async (req, res, next) => {
 
     const authorizationHeader = req.headers.authorization;
@@ -89,7 +89,7 @@ const protectPath = async (req, res, next) => {
         return res.status(401).json({message: 'please provide an Acesss token'})
     }
 
-    if (authorizationHeader && authorizationHeader.toLowerCase().startsWith('bearer ')) {
+    if (authorizationHeader && authorizationHeader.toLowerCase().startsWith('bearer')) {
         const token = authorizationHeader.split(' ')[1]; // Extract the token part
 
         // Proceed to verify the token
