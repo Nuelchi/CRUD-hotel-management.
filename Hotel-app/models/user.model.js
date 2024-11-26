@@ -31,14 +31,18 @@ const userSchema = new mongoose.Schema(
                 },
                 message: "password and confirmpassword do not match"
             },
-            // role: {
-            //     default: user,
-            // },
-        }
-    }
+        },
+         role: {
+            type: String,
+            // required: true,
+            enum: ['user', 'admin'],
+            default: 'user'
+            },
+        
+    },
 )
 
-userSchema.pre('save', async function(){
+userSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password, 11);
     this.confirmPassword = undefined;
 });

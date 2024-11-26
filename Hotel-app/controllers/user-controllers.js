@@ -8,7 +8,7 @@ const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body);
 
-        res.status(200).json({message: "Account created successfully!!, you can now login to gain full access",user,});
+        res.status(200).json({message: "Account created successfully!!, you can now login to gain full access",user});
         
 
     } catch(error){
