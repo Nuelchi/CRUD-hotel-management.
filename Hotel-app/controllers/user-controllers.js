@@ -1,8 +1,9 @@
-const { sign } = require('jsonwebtoken');
+
 const User = require('../models/user.model');
-const user = require('../models/user.model');
 jwt = require('jsonwebtoken');
 bcrypt = require('bcryptjs')
+
+
 
 const createUser = async (req, res) => {
     try {
@@ -71,6 +72,16 @@ const resetPassword = async (req, res) => {
     }
 };
 
+
+
+
+
+
+
+
+
+//MIDDLEWARES AND ROLES
+//midddleware to verify all users trying to gain access to the app
 const protectPath = async (req, res, next) => {
 
     const authorizationHeader = req.headers.authorization;
@@ -89,6 +100,7 @@ const protectPath = async (req, res, next) => {
             if(!user){
                 res.status(400).json({message: 'user with Token not found in DB please sign up or login user'});
             }
+            req.user = user;
         } catch (error) {
             console.error('Token verification failed:', error.message);
             return res.status(401).json({ message: 'Invalid or expired token' });
@@ -96,10 +108,25 @@ const protectPath = async (req, res, next) => {
     } else {
         return res.status(401).json({ message: 'Authorization header missing or invalid' });
     };
-    next()
-
-}
-
+    next();
+};
 
 
-module.exports = { createUser, loginUser, resetPassword, protectPath };
+
+//middleware to restriction certain users from performing some roles
+const restriction = (role) => {
+    return (req, res, next) => {
+        // Check if the user's role matches the required role
+        if (req.user.role !== role) {
+            console.log('req.user:', req.user.role);
+            return res.status(403).json({ message: 'You do not have access to perform this action' });
+        }
+        next(); // Allow access to the next middleware or route handler
+    };
+};
+
+
+
+
+
+module.exports = { createUser, loginUser, resetPassword, protectPath,restriction };
