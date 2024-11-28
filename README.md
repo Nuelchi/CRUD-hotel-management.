@@ -36,7 +36,9 @@ To run this project, ensure you have the following installed:
 
 3. **Install dependencies:**    
     ```bash
-    npm install mongodb mongoose nodemon jsonwebtoken bcryptjs
+    npm init --yes
+    ```bash
+    npm install express mongodb mongoose nodemon 
 
 4. **Create a .env file in the root directory and configure the following variables**:
     SECRET_STR=your_jwt_secret

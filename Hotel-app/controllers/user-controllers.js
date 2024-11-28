@@ -29,7 +29,6 @@ const loginUser = async (req, res) => {
         // check if inputs were given
         if (!email || !password) {
             return res.status(404).json({ message: 'Password and Email required' });
-
         }
         // check if user exists in the data base
         newUser = await User.findOne({ email }).select('+password');
@@ -41,9 +40,9 @@ const loginUser = async (req, res) => {
             return res.status(404).json({ message: 'invalid password' })
         };
 
-        const Token = jwt.sign({ id: newUser._id }, process.env.SECRET_STR, {
-            expiresIn: process.env.LOGIN_EXPIRES
-        })
+        const Token = jwt.sign({ id: newUser._id }, process.env.SECRET_STRING, {
+            expiresIn: process.env.LOGIN_EXPIRES 
+        });
 
         res.cookie('jwt', Token)
         return res.status(200).json({ message: 'You have Logged in Successfully!!, find your Access token in the cookie section' });
@@ -94,8 +93,8 @@ const protectPath = async (req, res, next) => {
 
         // Proceed to verify the token
         try {
-            const decoded = await jwt.verify(token, process.env.SECRET_STR);
-            const user = User.findById(decoded.id);
+            const decoded = await jwt.verify(token, process.env.SECRET_STRING);
+            const user = await User.findById(decoded.id);
         
             if(!user){
                 res.status(400).json({message: 'user with Token not found in DB please sign up or login user'});

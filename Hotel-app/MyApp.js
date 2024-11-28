@@ -1,12 +1,10 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
-const Room = require('./models/Room-model.js');
-const RoomType = require('./models/Room-Type-model.js');
-const userRoute = require('./Routes/user-routes.js')
+const userRoute = require('./Routes/user-routes.js');
 
 const express = require('express');
-const { Db } = require('mongodb');
+
 const app = express();
 
 const roomRoute = require('./Routes/room.routes.js')
